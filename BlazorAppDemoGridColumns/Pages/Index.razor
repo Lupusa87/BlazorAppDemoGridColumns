@@ -1,0 +1,52 @@
+﻿@page "/"
+
+<div>
+    <span style="margin:10px;font-weight:bold">select column</span><br /><br />
+
+
+    @foreach (var i in columnsList)
+    {
+        <span style="@GetStyle(i.id)" @onclick="@(e => onSelect(i.id))">@i.Name</span><br />
+    }
+
+</div>
+
+<br />
+<br />
+
+<button class="btn btn-primary" style="margin:10px" disabled="@columnsList[SelectedIndex].IsShown" @onclick="AddRemoveColumn">add</button>
+
+
+<button class="btn btn-primary" style="margin:10px" disabled="@(!columnsList[SelectedIndex].IsShown)" @onclick="AddRemoveColumn">remove</button>
+
+<br />
+<br />
+
+@if (columnsList == null && columnsList.Any(x=>x.IsShown))
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            @foreach (var item in columnsList.Where(x => x.IsShown))
+            {
+                <th>@item.Name</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 1; i <= 10; i++)
+        {
+            <tr>
+                @foreach (var item in columnsList.Where(x => x.IsShown))
+                {
+                    <td>@i value for @item.Name</td>
+                }
+                </tr>
+        }
+        </tbody>
+    </table>
+}
